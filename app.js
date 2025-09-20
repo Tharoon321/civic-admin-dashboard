@@ -1,5 +1,5 @@
 // Civic Issues Admin Dashboard JavaScript
-
+const API_BASE_URL = 'https://civic-reports-api-production.up.railway.app/api';
 // Application data
 const appData = {
   "issues": [
