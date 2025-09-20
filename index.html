@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civic Issues Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>🏛️ Civic Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#dashboard" class="nav-link active" data-section="dashboard">📊 Dashboard</a></li>
+            <li><a href="#issues" class="nav-link" data-section="issues">📋 Issues</a></li>
+            <li><a href="#analytics" class="nav-link" data-section="analytics">📈 Analytics</a></li>
+            <li><a href="#settings" class="nav-link" data-section="settings">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="mobile-toggle">☰</button>
+                <h1 id="page-title">Dashboard</h1>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Search issues..." id="search-input">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="notifications">
+                    <button class="notification-btn">🔔 <span class="notification-count">3</span></button>
+                </div>
+                <div class="user-profile">
+                    <span>Admin User</span>
+                    <div class="avatar">👤</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card total-reports">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-details">
+                        <h3 id="total-reports">64</h3>
+                        <p>Total Reports</p>
+                    </div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-details">
+                        <h3 id="pending-count">23</h3>
+                        <p>Pending</p>
+                    </div>
+                </div>
+                <div class="stat-card in-progress">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-details">
+                        <h3 id="in-progress-count">31</h3>
+                        <p>In Progress</p>
+                    </div>
+                </div>
+                <div class="stat-card resolved">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-details">
+                        <h3 id="resolved-count">10</h3>
+                        <p>Resolved</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-container" style="position: relative; height: 400px;">
+                    <h3>Issues by Category</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div class="chart-container" style="position: relative; height: 400px;">
+                    <h3>Priority Distribution</h3>
+                    <canvas id="priorityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div class="activity-list" id="activity-list">
+                    <!-- Activity items will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Issues Section -->
+        <section id="issues-section" class="content-section">
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter" class="form-control">
+                        <option value="">All</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter" class="form-control">
+                        <option value="">All Categories</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priority-filter">Priority:</label>
+                    <select id="priority-filter" class="form-control">
+                        <option value="">All Priorities</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>
+                </div>
+                <button class="btn btn--primary" id="clear-filters">Clear Filters</button>
+            </div>
+
+            <!-- Issues Table -->
+            <div class="issues-table-container">
+                <table class="issues-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issues-table-body">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics-section" class="content-section">
+            <div class="analytics-grid">
+                <div class="chart-container" style="position: relative; height: 300px;">
+                    <h3>Monthly Trends</h3>
+                    <canvas id="trendsChart"></canvas>
+                </div>
+                <div class="department-performance">
+                    <h3>Department Performance</h3>
+                    <div class="department-list" id="department-list">
+                        <!-- Department cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="content-section">
+            <div class="settings-container">
+                <h2>System Settings</h2>
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3>Categories Management</h3>
+                        <div class="categories-grid" id="categories-grid">
+                            <!-- Categories will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <h3>System Preferences</h3>
+                        <div class="form-group">
+                            <label class="form-label">Default Priority</label>
+                            <select class="form-control">
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Auto-assign to Department</label>
+                            <input type="checkbox" checked> Enable automatic assignment
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Issue Detail Modal -->
+    <div id="issue-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Issue Details</h2>
+                <button class="close-btn" id="close-modal">✖</button>
+            </div>
+            <div class="modal-body">
+                <div class="issue-details">
+                    <div class="issue-image">
+                        <img id="issue-photo" src="" alt="Issue photo">
+                    </div>
+                    <div class="issue-info">
+                        <div class="info-row">
+                            <strong>ID:</strong> <span id="issue-id"></span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Category:</strong> <span id="issue-category"></span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Location:</strong> <span id="issue-location"></span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Reported by:</strong> <span id="issue-reporter"></span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Date:</strong> <span id="issue-date"></span>
+                        </div>
+                        <div class="info-row">
+                            <strong>Department:</strong> <span id="issue-department"></span>
+                        </div>
+                        <div class="description">
+                            <strong>Description:</strong>
+                            <p id="issue-description"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="issue-actions">
+                    <div class="action-group">
+                        <label for="status-update">Update Status:</label>
+                        <select id="status-update" class="form-control">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                    </div>
+                    <div class="action-group">
+                        <label for="priority-update">Update Priority:</label>
+                        <select id="priority-update" class="form-control">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </div>
+                    <button class="btn btn--primary" id="update-issue">Update Issue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
